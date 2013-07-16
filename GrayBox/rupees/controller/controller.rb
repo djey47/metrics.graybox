@@ -24,16 +24,16 @@ class MetrixController
   def run
     # Webservices IN
     # TODO in a new thread
-    puts("Starting WebservicesInConnector...")
+    puts("[MetrixController] Starting WebservicesInConnector...")
     WebservicesInConnector.run!
-    puts("WebservicesInConnector started.")    
+    puts("[MetrixController] WebservicesInConnector started.")    
     
     # Main loop here ...
   end
 end
 
 # Boot
-puts("Booting Metrix controller...")
+puts("[MetrixController] Booting Metrix controller...")
 controller = MetrixController.new
 controller.run
-puts("Exiting Metrix controller...")
+puts("[MetrixController] Exiting Metrix controller...")

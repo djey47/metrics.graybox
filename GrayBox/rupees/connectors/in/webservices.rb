@@ -11,13 +11,15 @@ class WebservicesInConnector < Sinatra::Base
   end
   
   def store(appId, contextId, natureId, value)
-    puts("POST received! appId: #{appId} - contextId: #{contextId} - natureId: #{natureId} - value: #{value}")
+    puts("[WebservicesInConnector] POST received! appId: #{appId} - contextId: #{contextId} - natureId: #{natureId} - value: #{value}")
 
     #Should call collector here...    
   end
   
   #Q&D example
   get '/' do
+    puts("[WebservicesInConnector] GET received! /")
+
     'Hello world! This is Metrics Project - GrayBox :)
     <br/>
     Currently demonstrating of webservices IN connector'
