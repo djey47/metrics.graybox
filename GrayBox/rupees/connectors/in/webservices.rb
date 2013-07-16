@@ -11,11 +11,17 @@ class HttpServer < Sinatra::Base
   end
 
   def store(appId, contextId, natureId, value)
-    puts("[HttpServer] POST received! appId: #{appId} - contextId: #{contextId} - natureId: #{natureId} - value: #{value}")
+    puts("[HttpServer][store] POST received! appId: #{appId} - contextId: #{contextId} - natureId: #{natureId} - value: #{value}")
 
     MetricsController.instance.collector.add(appId, contextId, natureId, value)
   end
   
+  def storeStar(appId, *values)
+    puts("[HttpServer][store*] POST received! appId: #{appId} - values: #{values}")
+
+    MetricsController.instance.collector.addAll(appId, values)
+  end
+
   #Q&D example
   get '/' do
     puts("[HttpServer] GET received! /")
@@ -31,13 +37,21 @@ class HttpServer < Sinatra::Base
     204
   end
 
+  #IN service : multi-valued
+  post '/collector/:appId' do
+    
+    #Should extract values from request body
+    values=[]
+    
+    storeStar(params[:appId], values)
+    204
+  end
+
 end
 
 class WebservicesInConnector
   def initialize
-    puts("[WebservicesInConnector] Initializing...")    
-    
-    
+    puts("[WebservicesInConnector] Initializing...")            
   end
   
   def start  
