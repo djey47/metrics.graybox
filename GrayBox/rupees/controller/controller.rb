@@ -1,17 +1,20 @@
 #controller.rb
 #Metrics Controller
 
-require 'singleton'
+
+
 require_relative '../connectors/in/webservices'
-require_relative '../collector/collector'
 require_relative '../cache/rediscache'
+require_relative '../collector/collector'
+
+require 'singleton'
 
 class MetricsController 
-  
   include Singleton
   
   attr_accessor :collector
   attr_accessor :cache
+  attr_accessor :wsInConnector
     
  
   def initialize    
@@ -21,6 +24,7 @@ class MetricsController
     # Should instantiate server
 
     # Should instantiate all enabled IN connectors
+    @wsInConnector = WebservicesInConnector.new
     
     # Should instantiate all enabled OUT connectors
     
@@ -35,7 +39,7 @@ class MetricsController
     # TODO in a new thread
     puts("[MetricsController] Starting WebservicesInConnector...")
     
-    WebservicesInConnector.run!
+    @wsInConnector.start
     
     puts("[MetricsController] WebservicesInConnector started.")    
     
