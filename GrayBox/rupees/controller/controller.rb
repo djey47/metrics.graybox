@@ -1,13 +1,20 @@
 #controller.rb
-#Metrix Controller
+#Metrics Controller
 
+require 'singleton'
 require_relative '../connectors/in/webservices'
+require_relative '../collector/collector'
 
-class MetrixController
+class MetricsController 
+  
+  include Singleton
+  
+  attr_accessor :collector  
  
-  def initialize
+  def initialize    
+    @collector = Collector.new 
     
-    # Should instantiate collector
+    # Should instantiate cache
     
     # Should instantiate server
 
@@ -24,16 +31,17 @@ class MetrixController
   def run
     # Webservices IN
     # TODO in a new thread
-    puts("[MetrixController] Starting WebservicesInConnector...")
+    puts("[MetricsController] Starting WebservicesInConnector...")
     WebservicesInConnector.run!
-    puts("[MetrixController] WebservicesInConnector started.")    
+    puts("[MetricsController] WebservicesInConnector started.")    
     
     # Main loop here ...
   end
 end
 
 # Boot
-puts("[MetrixController] Booting Metrix controller...")
-controller = MetrixController.new
-controller.run
-puts("[MetrixController] Exiting Metrix controller...")
+puts("[MetricsController] Booting Metrics controller...")
+
+MetricsController.instance.run
+
+puts("[MetricsController] Exiting Metrics controller...")

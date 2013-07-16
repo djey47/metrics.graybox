@@ -3,6 +3,7 @@
 
 require 'sinatra'
 require 'sinatra/base'
+require_relative '../../controller/controller'
 
 class WebservicesInConnector < Sinatra::Base
   def initialize
@@ -13,7 +14,7 @@ class WebservicesInConnector < Sinatra::Base
   def store(appId, contextId, natureId, value)
     puts("[WebservicesInConnector] POST received! appId: #{appId} - contextId: #{contextId} - natureId: #{natureId} - value: #{value}")
 
-    #Should call collector here...    
+    MetricsController.instance.collector.add(appId, contextId, natureId, value)
   end
   
   #Q&D example
