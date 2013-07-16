@@ -4,8 +4,6 @@
 require 'sinatra'
 require 'sinatra/base'
 
-require_relative '../../controller/controller'
-
 class HttpServer < Sinatra::Base
   def initialize
     #Required for correct Sinatra init

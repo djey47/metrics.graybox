@@ -1,8 +1,6 @@
 #collector.rb
 #Provides methods to handle information storage
 
-require_relative '../controller/controller'
-
 class Collector
  
   def initialize
