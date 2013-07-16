@@ -4,17 +4,19 @@
 require 'singleton'
 require_relative '../connectors/in/webservices'
 require_relative '../collector/collector'
+require_relative '../cache/rediscache'
 
 class MetricsController 
   
   include Singleton
   
-  attr_accessor :collector  
+  attr_accessor :collector
+  attr_accessor :cache
+    
  
   def initialize    
     @collector = Collector.new 
-    
-    # Should instantiate cache
+    @cache = RedisCache.new
     
     # Should instantiate server
 
@@ -32,7 +34,9 @@ class MetricsController
     # Webservices IN
     # TODO in a new thread
     puts("[MetricsController] Starting WebservicesInConnector...")
+    
     WebservicesInConnector.run!
+    
     puts("[MetricsController] WebservicesInConnector started.")    
     
     # Main loop here ...
