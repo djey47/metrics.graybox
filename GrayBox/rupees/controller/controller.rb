@@ -1,8 +1,6 @@
 #controller.rb
 #Metrics Controller
 
-
-
 require_relative '../connectors/in/webservices'
 require_relative '../cache/rediscache'
 require_relative '../collector/collector'
@@ -17,9 +15,9 @@ class MetricsController
   attr_accessor :wsInConnector
     
  
-  def initialize    
-    @collector = Collector.new 
-    @cache = RedisCache.new
+  def initialize               
+   @collector = Collector.new 
+   @cache = RedisCache.new
     
     # Should instantiate server
 
