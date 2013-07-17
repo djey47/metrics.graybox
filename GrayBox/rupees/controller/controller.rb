@@ -42,17 +42,16 @@ class MetricsController
       puts("[MetricsController] Starting WebservicesInConnector...")
     
       @wsInConnector.start
-    
-      puts("[MetricsController] WebservicesInConnector started.")
     }
+    
+    # To prevent misconfiguring of HTTP servers
+    sleep 0.25
     
     # Webservices OUT
     allThreads << Thread.new {      
       puts("[MetricsController] Starting WebservicesOutConnector...")
     
       @wsOutConnector.start
-    
-      puts("[MetricsController] WebservicesOutConnector started.")
     }    
 
     # Waiting for all threads to terminate
