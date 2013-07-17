@@ -3,6 +3,7 @@
 
 require_relative '../cache/rediscache'
 require_relative '../collector/collector'
+require_relative '../server/server'
 require_relative '../connectors/in/webservices'
 
 require 'singleton'
@@ -10,15 +11,18 @@ require 'singleton'
 class MetricsController 
   include Singleton
   
-  attr_accessor :collector
   attr_accessor :cache
+  attr_accessor :collector
+  attr_accessor :server
   attr_accessor :wsInConnector
     
   def initialize               
-    @collector = Collector.new 
-    
     @cache = RedisCache.new
-    
+
+    @collector = Collector.new 
+
+    @server = Server.new
+        
     @wsInConnector = WebservicesInConnector.new
     
     # Should instantiate all enabled OUT connectors
@@ -26,8 +30,6 @@ class MetricsController
     # Should instantiate all enabled aggregators
     
     # Should instantiate all enabled formatters
-    
-    # Should instantiate server
   end
     
   def run
