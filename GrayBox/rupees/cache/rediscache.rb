@@ -12,4 +12,11 @@ class RedisCache
     
     #Should call cache
   end
+
+  #TODO input parameters ??
+  def retrieve
+    puts("[RedisCache] retrieve was called!")
+    
+    #Should call cache
+  end
 end
