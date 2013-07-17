@@ -7,6 +7,5 @@ By Djey
  OR via script : scripts/start-metrics.cmd (win) / start-metrics.sh (linux)
  
 * WS IN Connector : localhost:4567
-/ -> hello world
-/collector/:appId/:contextId/:natureId/:value -> store data
 
+* WS OUT Connector : localhost:4568

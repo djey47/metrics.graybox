@@ -35,23 +35,28 @@ class MetricsController
   end
     
   def run
+    allThreads = []
+
     # Webservices IN
-    # TODO in a new thread
-    puts("[MetricsController] Starting WebservicesInConnector...")
+    allThreads << Thread.new {
+      puts("[MetricsController] Starting WebservicesInConnector...")
     
-    @wsInConnector.start
+      @wsInConnector.start
     
-    puts("[MetricsController] WebservicesInConnector started.")    
+      puts("[MetricsController] WebservicesInConnector started.")
+    }
     
     # Webservices OUT
-    # TODO in a new thread
-    puts("[MetricsController] Starting WebservicesOutConnector...")
+    allThreads << Thread.new {      
+      puts("[MetricsController] Starting WebservicesOutConnector...")
     
-    @wsOutConnector.start
+      @wsOutConnector.start
     
-    puts("[MetricsController] WebservicesOutConnector started.")    
+      puts("[MetricsController] WebservicesOutConnector started.")
+    }    
 
-    # Main loop here ...
+    # Waiting for all threads to terminate
+    allThreads.each { |thr| thr.join }
   end
 end
 

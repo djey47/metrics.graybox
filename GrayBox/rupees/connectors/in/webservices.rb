@@ -4,27 +4,32 @@
 require 'sinatra'
 require 'sinatra/base'
 
-class HttpServer < Sinatra::Base
+class HttpServerIn < Sinatra::Base
   def initialize
     #Required for correct Sinatra init
     super
   end
 
   def store(appId, contextId, natureId, value)
-    puts("[HttpServer][store] POST received! appId: #{appId} - contextId: #{contextId} - natureId: #{natureId} - value: #{value}")
+    puts("[HttpServerIn][store] POST received! appId: #{appId} - contextId: #{contextId} - natureId: #{natureId} - value: #{value}")
 
     MetricsController.instance.collector.add(appId, contextId, natureId, value)
   end
   
   def storeStar(appId, *values)
-    puts("[HttpServer][store*] POST received! appId: #{appId} - values: #{values}")
+    puts("[HttpServerIn][store*] POST received! appId: #{appId} - values: #{values}")
 
     MetricsController.instance.collector.addAll(appId, values)
   end
+  
+  #config
+  set :environment, :development
+  set :server, %w[thin mongrel webrick]    
+  set :port, 4567  
 
   #Q&D example
   get '/' do
-    puts("[HttpServer] GET received! /")
+    puts("[HttpServerIn] GET received! /")
 
     [200, 'Hello world! This is Metrics Project - GrayBox :)
     <br/>
@@ -57,6 +62,6 @@ class WebservicesInConnector
   def start  
     puts("[WebservicesInConnector] Starting HTTP server...")    
 
-    HttpServer.run!
+    HttpServerIn.run!
   end  
 end

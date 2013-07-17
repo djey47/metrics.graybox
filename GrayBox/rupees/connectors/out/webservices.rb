@@ -4,27 +4,32 @@
 require 'sinatra'
 require 'sinatra/base'
 
-class HttpServer < Sinatra::Base
+class HttpServerOut < Sinatra::Base
   def initialize
     #Required for correct Sinatra init
     super
   end
 
   def retrieve(appId, contextId, natureId)
-    puts("[HttpServer][retrieve] GET received! appId: #{appId} - contextId: #{contextId} - natureId: #{natureId}")
+    puts("[HttpServerOut][retrieve] GET received! appId: #{appId} - contextId: #{contextId} - natureId: #{natureId}")
 
     MetricsController.instance.server.get(appId, contextId, natureId)
   end
   
   def retrieveStar(appId)
-    puts("[HttpServer][retrieve*] GET received! appId: #{appId}")
+    puts("[HttpServerOut][retrieve*] GET received! appId: #{appId}")
 
     MetricsController.instance.server.getAll(appId)
   end
 
+  #config
+  set :environment, :development
+  set :server, %w[thin mongrel webrick]    
+  set :port, 4568  
+
   #Q&D example
   get '/' do
-    puts("[HttpServer] GET received! /")
+    puts("[HttpServerOut] GET received! /")
 
     [200, 'Hello world! This is Metrics Project - GrayBox :)
     <br/>
@@ -53,6 +58,6 @@ class WebservicesOutConnector
   def start  
     puts("[WebservicesOutConnector] Starting HTTP server...")    
 
-    HttpServer.run!
+    HttpServerOut.run!
   end  
 end
