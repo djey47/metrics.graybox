@@ -7,14 +7,14 @@ class Server
     puts("[Server] Initializing...")    
   end
   
-  def get(appId, contextId, natureId, value)
-    puts("[Server][get] Request received! appId: #{appId} - contextId: #{contextId} - natureId: #{natureId} - value: #{value}")
+  def get(appId, contextId, natureId)
+    puts("[Server][get] Request received! appId: #{appId} - contextId: #{contextId} - natureId: #{natureId}")
     
     MetricsController.instance.cache.retrieve
   end
 
-  def getAll(appId, *values)
-    puts("[Server][getAll] Data received! appId: #{appId} - values: #{values}")
+  def getAll(appId)
+    puts("[Server][getAll] Request received! appId: #{appId}")
     
     MetricsController.instance.cache.retrieve
   end

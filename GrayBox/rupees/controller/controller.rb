@@ -5,6 +5,7 @@ require_relative '../cache/rediscache'
 require_relative '../collector/collector'
 require_relative '../server/server'
 require_relative '../connectors/in/webservices'
+require_relative '../connectors/out/webservices'
 
 require 'singleton'
 
@@ -15,7 +16,8 @@ class MetricsController
   attr_accessor :collector
   attr_accessor :server
   attr_accessor :wsInConnector
-    
+  attr_accessor :wsOutConnector
+      
   def initialize               
     @cache = RedisCache.new
 
@@ -25,7 +27,7 @@ class MetricsController
         
     @wsInConnector = WebservicesInConnector.new
     
-    # Should instantiate all enabled OUT connectors
+    @wsOutConnector = WebservicesOutConnector.new
     
     # Should instantiate all enabled aggregators
     
@@ -41,6 +43,14 @@ class MetricsController
     
     puts("[MetricsController] WebservicesInConnector started.")    
     
+    # Webservices OUT
+    # TODO in a new thread
+    puts("[MetricsController] Starting WebservicesOutConnector...")
+    
+    @wsOutConnector.start
+    
+    puts("[MetricsController] WebservicesOutConnector started.")    
+
     # Main loop here ...
   end
 end
