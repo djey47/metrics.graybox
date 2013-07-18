@@ -38,14 +38,14 @@ class HttpServerOut < Sinatra::Base
   
   #OUT service : mono-valued
   get '/server/:appId/:contextId/:natureId' do
-    retrieve(params[:appId], params[:contextId], params[:natureId])
-    200
+    result = retrieve(params[:appId], params[:contextId], params[:natureId])
+    [200, result]
   end
 
   #OUT service : multi-valued
   get '/server/:appId' do
-    retrieveStar(params[:appId])
-    200
+    result = retrieveStar(params[:appId])
+    [200, result]
   end
 
 end
