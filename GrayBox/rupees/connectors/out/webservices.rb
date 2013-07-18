@@ -13,13 +13,13 @@ class HttpServerOut < Sinatra::Base
   def retrieve(appId, contextId, natureId)
     puts("[HttpServerOut][retrieve] GET received! appId: #{appId} - contextId: #{contextId} - natureId: #{natureId}")
 
-    MetricsController.instance.server.get(appId, contextId, natureId)
+    MetricsController.instance.server.get(appId, contextId, natureId).to_json
   end
   
   def retrieveStar(appId)
     puts("[HttpServerOut][retrieve*] GET received! appId: #{appId}")
 
-    MetricsController.instance.server.getAll(appId)
+    MetricsController.instance.server.getAll(appId).to_json
   end
 
   #config

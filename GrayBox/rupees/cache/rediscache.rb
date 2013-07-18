@@ -3,6 +3,8 @@
 
 require 'redis'
 
+require_relative '../model/dataitem'
+
 class RedisCache
   
   def initialize
@@ -11,17 +13,31 @@ class RedisCache
     @redis = Redis.new
   end
   
-  #TODO input parameters ??
-  def store
-    puts("[RedisCache] store was called!")
+  def store(datas)
+    puts("[RedisCache] store was called! Datas count: #{datas.length}")
     
-    @redis.set "key1","value1"
+    @redis.multi do
+      datas.each { |data| @redis.set(data.key, data.value) }
+    end
   end
 
-  #TODO input parameters ??
-  def retrieve
-    puts("[RedisCache] retrieve was called!")
+  def retrieve(keys)
+    puts("[RedisCache] retrieve was called! Keys count: #{keys.length}")
 
-    @redis.get "key1"    
+    results = []
+    @redis.multi do
+      keys.each { |key| results << @redis.get(key) }
+    end
+    
+    datas = []
+    i = -1       
+    datas = results.collect do |future|       
+      i += 1
+      DataItem.new(keys[i], future.value)
+    end
+    
+    puts("[RedisCache] retrieve result: #{datas}")
+    
+    datas
   end
 end

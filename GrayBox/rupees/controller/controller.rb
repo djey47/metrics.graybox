@@ -12,11 +12,11 @@ require 'singleton'
 class MetricsController 
   include Singleton
   
-  attr_accessor :cache
-  attr_accessor :collector
-  attr_accessor :server
-  attr_accessor :wsInConnector
-  attr_accessor :wsOutConnector
+  attr_reader :cache
+  attr_reader :collector
+  attr_reader :server
+  attr_reader :wsInConnector
+  attr_reader :wsOutConnector
       
   def initialize               
     @cache = RedisCache.new

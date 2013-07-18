@@ -1,6 +1,8 @@
 #collector.rb
 #Provides methods to handle information storage
 
+require_relative '../model/dataitem'
+
 class Collector
  
   def initialize
@@ -10,7 +12,11 @@ class Collector
   def add(appId, contextId, natureId, value)
     puts("[Collector][add] Data received! appId: #{appId} - contextId: #{contextId} - natureId: #{natureId} - value: #{value}")
     
-    MetricsController.instance.cache.store
+    key = buildKey(appId, contextId, natureId)    
+    datas = []
+    datas << DataItem.new(key, value) 
+    
+    MetricsController.instance.cache.store datas
   end
 
   def addAll(appId, *values)
@@ -18,4 +24,8 @@ class Collector
     
     MetricsController.instance.cache.store
   end
+  
+  def buildKey(appId, contextId, natureId)
+    "#{appId}|#{contextId}|#{natureId}"  
+  end       
 end

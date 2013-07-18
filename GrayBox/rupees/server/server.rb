@@ -1,6 +1,8 @@
 #server.rb
 #Provides methods to handle stored information gathering
 
+require_relative '../model/dataitem'
+
 class Server
  
   def initialize
@@ -10,7 +12,9 @@ class Server
   def get(appId, contextId, natureId)
     puts("[Server][get] Request received! appId: #{appId} - contextId: #{contextId} - natureId: #{natureId}")
     
-    MetricsController.instance.cache.retrieve
+    keys = []
+    keys << buildKey(appId, contextId, natureId)
+    MetricsController.instance.cache.retrieve keys
   end
 
   def getAll(appId)
@@ -18,4 +22,9 @@ class Server
     
     MetricsController.instance.cache.retrieve
   end
+  
+  
+  def buildKey(appId, contextId, natureId)
+    "#{appId}|#{contextId}|#{natureId}"  
+  end         
 end
