@@ -2,6 +2,7 @@
 #Provides methods to handle stored information gathering
 
 require_relative '../model/dataitem'
+require_relative '../model/exceptions/novalueexception'
 
 class Server
  
@@ -14,7 +15,14 @@ class Server
     
     keys = []
     keys << buildKey(appId, contextId, natureId)
-    MetricsController.instance.cache.retrieve keys
+    
+    results = MetricsController.instance.cache.retrieve(keys)
+    
+    if (results[0].value == nil)
+      raise NoValueException, 'Value not found!'
+    else
+      results[0]
+    end        
   end
 
   def getAll(appId)
@@ -22,8 +30,7 @@ class Server
     
     MetricsController.instance.cache.retrieve
   end
-  
-  
+    
   def buildKey(appId, contextId, natureId)
     "#{appId}|#{contextId}|#{natureId}"  
   end         

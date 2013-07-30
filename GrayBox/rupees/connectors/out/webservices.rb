@@ -3,6 +3,9 @@
 
 require 'sinatra'
 require 'sinatra/base'
+require 'json'
+require_relative '../../model/erroritem'
+require_relative '../../model/exceptions/novalueexception'
 
 class HttpServerOut < Sinatra::Base
   def initialize
@@ -13,13 +16,13 @@ class HttpServerOut < Sinatra::Base
   def retrieve(appId, contextId, natureId)
     puts("[HttpServerOut][retrieve] GET received! appId: #{appId} - contextId: #{contextId} - natureId: #{natureId}")
 
-    MetricsController.instance.server.get(appId, contextId, natureId).to_json
+    MetricsController.instance.server.get(appId, contextId, natureId)
   end
   
   def retrieveStar(appId)
     puts("[HttpServerOut][retrieve*] GET received! appId: #{appId}")
 
-    MetricsController.instance.server.getAll(appId).to_json
+    MetricsController.instance.server.getAll(appId)
   end
 
   #config
@@ -38,14 +41,22 @@ class HttpServerOut < Sinatra::Base
   
   #OUT service : mono-valued
   get '/server/:appId/:contextId/:natureId' do
-    result = retrieve(params[:appId], params[:contextId], params[:natureId])
-    [200, result]
+    begin      
+      result = retrieve(params[:appId], params[:contextId], params[:natureId])
+      content_type :json      
+      [200, { :key => result.key, :value => result.value }.to_json]      
+    rescue NoValueException
+      error = { :code => ErrorItem::VALUE_NOT_FOUND, :detail => "#{params[:appId]}|#{params[:contextId]}|#{params[:natureId]}"}
+      content_type :json      
+      [404, error.to_json]      
+    end
   end
 
   #OUT service : multi-valued
   get '/server/:appId' do
     result = retrieveStar(params[:appId])
-    [200, result]
+    content_type :json          
+    [200, JSON.dump(result)]
   end
 
 end
