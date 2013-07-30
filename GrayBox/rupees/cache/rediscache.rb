@@ -29,8 +29,8 @@ class RedisCache
       keys.each { |key| results << @redis.get(key) }
     end
     
-    datas = []
-    i = -1       
+    i = -1   
+    datas = []    
     datas = results.collect do |future|       
       i += 1
       DataItem.new(keys[i], future.value)
