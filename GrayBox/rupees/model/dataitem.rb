@@ -1,4 +1,4 @@
-#data.rb
+#dataitem.rb
 #Data model: represents base structure
 
 class DataItem
