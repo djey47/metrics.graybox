@@ -36,8 +36,21 @@ class RedisCache
       DataItem.new(keys[i], future.value)
     end
     
-    puts("[RedisCache] retrieve result: #{datas}")
+    puts("[RedisCache][retrieve] Result: #{datas}")
     
     datas
   end
+  
+  def retrieveByAppId(appId)
+    puts("[RedisCache][retrieveByAppId] appId: #{appId}")
+
+    keys = @redis.keys("#{appId}|*|*")
+    datas = retrieve(keys)
+    
+    puts("[RedisCache][retrieveByAppId] Keys: #{keys}")
+    puts("[RedisCache][retrieveByAppId] Result: #{datas}")
+
+    datas  
+  end
+  
 end

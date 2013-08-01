@@ -24,6 +24,10 @@ class HttpServerOut < Sinatra::Base
 
     MetricsController.instance.server.getAll(appId)
   end
+  
+  def buildDataStructure(data)
+    { :key => data.key, :value => data.value }   
+  end
 
   #config
   set :environment, :development
@@ -44,7 +48,7 @@ class HttpServerOut < Sinatra::Base
     begin      
       result = retrieve(params[:appId], params[:contextId], params[:natureId])
       content_type :json      
-      [200, { :key => result.key, :value => result.value }.to_json]      
+      [200, buildDataStructure(result).to_json]      
     rescue NoValueException
       error = { :code => ErrorItem::VALUE_NOT_FOUND, :detail => "#{params[:appId]}|#{params[:contextId]}|#{params[:natureId]}"}
       content_type :json      
@@ -54,9 +58,17 @@ class HttpServerOut < Sinatra::Base
 
   #OUT service : multi-valued
   get '/server/:appId' do
-    result = retrieveStar(params[:appId])
-    content_type :json          
-    [200, JSON.dump(result)]
+    begin      
+      results = retrieveStar(params[:appId])
+      content_type :json         
+      toReturn = []
+      results.each { |result| toReturn << buildDataStructure(result) }                   
+      [200, { :datas => toReturn}.to_json]
+    rescue NoValueException
+      error = { :code => ErrorItem::VALUE_NOT_FOUND, :detail => "#{params[:appId]}|<any>|<any>"}
+      content_type :json      
+      [404, error.to_json]      
+    end      
   end
 
 end

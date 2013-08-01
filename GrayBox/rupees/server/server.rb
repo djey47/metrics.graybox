@@ -28,10 +28,16 @@ class Server
   def getAll(appId)
     puts("[Server][getAll] Request received! appId: #{appId}")
     
-    MetricsController.instance.cache.retrieve
+    results = MetricsController.instance.cache.retrieveByAppId(appId)
+    
+    if (results.length == 0)
+      raise NoValueException, 'Value not found!'
+    else
+      results
+    end        
   end
     
   def buildKey(appId, contextId, natureId)
     "#{appId}|#{contextId}|#{natureId}"  
-  end         
+  end  
 end
