@@ -14,7 +14,7 @@ class RedisCache
   end
   
   def store(datas)
-    puts("[RedisCache] store was called! Datas count: #{datas.length}")
+    puts("[RedisCache][store] Datas count: #{datas.length}")
     
     @redis.multi do
       datas.each { |data| @redis.set(data.key, data.value) }
@@ -22,7 +22,7 @@ class RedisCache
   end
 
   def retrieve(keys)
-    puts("[RedisCache] retrieve was called! Keys count: #{keys.length}")
+    puts("[RedisCache][retrieve] Keys count: #{keys.length}")
 
     results = []
     @redis.multi do

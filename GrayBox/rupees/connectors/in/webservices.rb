@@ -16,10 +16,10 @@ class HttpServerIn < Sinatra::Base
     MetricsController.instance.collector.add(appId, contextId, natureId, value)
   end
   
-  def storeStar(appId, *datas)
+  def storeStar(appId, datas)
     puts("[HttpServerIn][store*] POST received! appId: #{appId} - values: #{datas}")
-
-    #MetricsController.instance.collector.addAll(appId, datas)
+    
+    MetricsController.instance.collector.addAll(appId, datas)
   end
   
   #config
@@ -44,8 +44,8 @@ class HttpServerIn < Sinatra::Base
 
   #IN service : multi-valued
   post '/collector/:appId' do
-    datas = JSON.parse(request.body.read)    
-    storeStar(params[:appId], datas["datas"])
+    req = JSON.parse(request.body.read)    
+    storeStar(params[:appId], req["datas"])
     204
   end
 

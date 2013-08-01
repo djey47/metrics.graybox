@@ -16,13 +16,15 @@ class Collector
     datas = []
     datas << DataItem.new(key, value) 
     
-    MetricsController.instance.cache.store datas
+    MetricsController.instance.cache.store(datas)
   end
 
-  def addAll(appId, *values)
-    puts("[Collector][addAll] Data received! appId: #{appId} - values: #{values}")
-    
-    MetricsController.instance.cache.store
+  def addAll(appId, datas)
+    puts("[Collector][addAll] Data received! appId: #{appId} - values: #{datas}")
+
+    toStore=[]
+    datas.each { |data| toStore << DataItem.new( buildKey(appId, data["key"]["ctxId"], data["key"]["natId"]), data["value"]) }
+    MetricsController.instance.cache.store(toStore)
   end
   
   def buildKey(appId, contextId, natureId)
