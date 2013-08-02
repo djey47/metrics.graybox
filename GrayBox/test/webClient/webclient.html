@@ -8,6 +8,7 @@
 
         <script src="./javascripts/lib/jquery-1.10.0.min.js"></script>
         <script src="./javascripts/lib/bootstrap.min.js"></script>
+        <script src="./javascripts/webclient.js"></script>
     </head>
 
     <body>
@@ -21,9 +22,44 @@
         </div>
 
     <!-- MAIN -->
-        <div id="mainContainer">
-
-        </div>
+        <div class="container" style="padding-top:45px;">
+        	<div class="form-horizontal">
+        		
+				<div class="control-group">
+                	<label class="control-label">Real time value check</label>
+				</div>
+				<div class="control-group">
+                	<label class="control-label">AppId</label>
+                	<div class="controls">
+                    	<input id="appId" type="text" value="APP_TEST"/>
+                	</div>
+            	</div>        		
+				<div class="control-group">
+                	<label class="control-label">ContextId</label>
+                	<div class="controls">
+                    	<input id="ctxId" type="text" value="STORE"/>
+                	</div>
+            	</div>        		
+				<div class="control-group">
+                	<label class="control-label">NatureId</label>
+                	<div class="controls">
+                    	<input id="natId" type="text" value="LOOP"/>
+                	</div>
+            	</div>        		
+				<div class="control-group">
+					<div class="btn-group">
+					  <button class="btn" id="checkBtn">Check</button>
+					  <button class="btn" id="stopBtn">Stop</button>
+					</div>    		
+				</div>
+				<div class="control-group">				
+                	<label class="control-label">Value</label>
+                	<div class="controls">
+	                	<input id="value" type="text" value=""/>                	
+					</div>				
+				</div>				
+			</div>
+    	</div>
 
     <!-- FOOTER -->
         <div class="navbar navbar-fixed-bottom">
