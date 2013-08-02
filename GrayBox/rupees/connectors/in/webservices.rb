@@ -11,13 +11,13 @@ class HttpServerIn < Sinatra::Base
   end
 
   def store(appId, contextId, natureId, value)
-    puts("[HttpServerIn][store] POST received! appId: #{appId} - contextId: #{contextId} - natureId: #{natureId} - value: #{value}")
+    puts("[HttpServerIn][store] POST, appId: #{appId} - contextId: #{contextId} - natureId: #{natureId} - value: #{value}")
 
     MetricsController.instance.collector.add(appId, contextId, natureId, value)
   end
   
   def storeStar(appId, datas)
-    puts("[HttpServerIn][store*] POST received! appId: #{appId} - values: #{datas}")
+    puts("[HttpServerIn][store*] POST, appId: #{appId} - values: #{datas}")
     
     MetricsController.instance.collector.addAll(appId, datas)
   end
@@ -29,7 +29,7 @@ class HttpServerIn < Sinatra::Base
 
   #Q&D example
   get '/' do
-    puts("[HttpServerIn] GET received! /")
+    puts("[HttpServerIn] GET /")
 
     [200, 'Hello world! This is Metrics Project - GrayBox :)
     <br/>
