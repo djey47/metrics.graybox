@@ -14,13 +14,13 @@ class HttpServerOut < Sinatra::Base
   end
 
   def retrieve(appId, contextId, natureId)
-    puts("[HttpServerOut][retrieve] GET received! appId: #{appId} - contextId: #{contextId} - natureId: #{natureId}")
+    puts("[HttpServerOut][retrieve] GET, appId: #{appId} - contextId: #{contextId} - natureId: #{natureId}")
 
     MetricsController.instance.server.get(appId, contextId, natureId)
   end
   
   def retrieveStar(appId)
-    puts("[HttpServerOut][retrieve*] GET received! appId: #{appId}")
+    puts("[HttpServerOut][retrieve*] GET, appId: #{appId}")
 
     MetricsController.instance.server.getAll(appId)
   end
@@ -36,7 +36,7 @@ class HttpServerOut < Sinatra::Base
 
   #Q&D example
   get '/' do
-    puts("[HttpServerOut] GET received! /")
+    puts("[HttpServerOut] GET /")
 
     [200, 'Hello world! This is Metrics Project - GrayBox :)
     <br/>
@@ -65,7 +65,7 @@ class HttpServerOut < Sinatra::Base
       results.each { |result| toReturn << buildDataStructure(result) }                   
       [200, { :datas => toReturn}.to_json]
     rescue NoValueException
-      error = { :code => ErrorItem::VALUE_NOT_FOUND, :detail => "#{params[:appId]}|<any>|<any>"}
+      error = { :code => ErrorItem::VALUES_NOT_FOUND, :detail => "#{params[:appId]}|<any>|<any>"}
       content_type :json      
       [404, error.to_json]      
     end      
