@@ -1,5 +1,5 @@
 #erroritem.rb
-#Model: represents base structure fo errors
+#Model: represents base structure for errors
 
 class ErrorItem
   VALUE_NOT_FOUND = '001'
