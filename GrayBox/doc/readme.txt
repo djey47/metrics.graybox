@@ -9,3 +9,9 @@ By Djey
 * WS IN Connector : localhost:4567
 
 * WS OUT Connector : localhost:4568
+
+
+-- TESTING --
+* Run scripts: test/*.sh
+
+* Q&D web client: test/webClient/webclient.html
