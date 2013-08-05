@@ -1,11 +1,11 @@
 $(function () {
 	// Refresh every (ms)
-	var DELAY = 5000;
+	var DELAY = 10;
 	
 	var refreshId;
 	
 	var successHandler = function (response) {
-		$("#value").val(response);
+		$("#value").val(response.value);
 	};
 	
 	var errorHandler = function (jqxhr, status, errorThrown) {
@@ -21,11 +21,12 @@ $(function () {
 				
 		$.ajax({
 			url: url,
-			type : "GET",
-            dataType : "text/json",			
+			type: "GET",
+            dataType: "jsonp",
+            jsonp: 'jsonp_callback', 			
 		  	success: successHandler,
 			error: errorHandler		  
-		});				
+		});	
 	}
 	
 	var startCheck = function() {

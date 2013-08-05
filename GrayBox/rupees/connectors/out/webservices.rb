@@ -28,6 +28,15 @@ class HttpServerOut < Sinatra::Base
   def buildDataStructure(data)
     { :key => data.key, :value => data.value }   
   end
+  
+  # Encapsulates with jsonp when necessary
+  def handleJsonResult(params, json)
+    if (params[:jsonp_callback]) 
+      "#{params[:jsonp_callback]}(#{json})"
+    else
+      json 
+    end 
+  end
 
   #config
   set :environment, :development
@@ -47,12 +56,14 @@ class HttpServerOut < Sinatra::Base
   get '/server/:appId/:contextId/:natureId' do
     begin      
       result = retrieve(params[:appId], params[:contextId], params[:natureId])
+      json = buildDataStructure(result).to_json
       content_type :json      
-      [200, buildDataStructure(result).to_json]      
+      [200, handleJsonResult(params, json) ]      
     rescue NoValueException
       error = { :code => ErrorItem::VALUE_NOT_FOUND, :detail => "#{params[:appId]}|#{params[:contextId]}|#{params[:natureId]}"}
+      json = error.to_json
       content_type :json      
-      [404, error.to_json]      
+      [404, handleJsonResult(params, json)]      
     end
   end
 
@@ -60,14 +71,16 @@ class HttpServerOut < Sinatra::Base
   get '/server/:appId' do
     begin      
       results = retrieveStar(params[:appId])
-      content_type :json         
       toReturn = []
-      results.each { |result| toReturn << buildDataStructure(result) }                   
-      [200, { :datas => toReturn}.to_json]
+      results.each { |result| toReturn << buildDataStructure(result) } 
+      json = { :datas => toReturn}.to_json                  
+      content_type :json         
+      [200, handleJsonResult(params, json)]
     rescue NoValueException
       error = { :code => ErrorItem::VALUES_NOT_FOUND, :detail => "#{params[:appId]}|<any>|<any>"}
+      json = error.to_json      
       content_type :json      
-      [404, error.to_json]      
+      [404, handleJsonResult(params, json)]      
     end      
   end
 
