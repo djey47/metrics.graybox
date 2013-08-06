@@ -26,7 +26,6 @@
         	<div class="form-horizontal">
         		
 				<div class="control-group">
-                	<label class="control-label">Real time value check</label>
 				</div>
 				<div class="control-group">
                 	<label class="control-label">AppId</label>
@@ -45,17 +44,38 @@
                 	<div class="controls">
                     	<input id="natId" type="text" value="LOOP"/>
                 	</div>
-            	</div>        		
+            	</div>    
+            	<hr />    		
 				<div class="control-group">
+                	<label class="control-label">One time value check</label>
+                	<div class="controls">
+						<div class="btn-group">
+						  <button class="btn" id="checkOneBtn">Check</button>
+						</div>
+					</div>    		
+				</div>
+				<div class="control-group">
+                	<label class="control-label">Real time value check</label>
+                	<div class="controls">
 					<div class="btn-group">
 					  <button class="btn" id="checkBtn">Check</button>
 					  <button class="btn" id="stopBtn">Stop</button>
+					</div>
+                	<span id="checkLbl" class="label label-info hide">Checking...</span>
 					</div>    		
 				</div>
 				<div class="control-group">				
                 	<label class="control-label">Value</label>
                 	<div class="controls">
-	                	<input id="value" type="text" value=""/>                	
+	                	<input id="value" type="text" value=""/>
+	                	@
+	                	<input id="time" type="text" value=""/>	                	                	
+					</div>				
+				</div>				
+				<div class="control-group">				
+                	<label class="control-label">Values (CSV)</label>
+                	<div class="controls">
+	                	<textarea id="valueExport" cols="45" style="width:350px;height:300px;"></textarea>
 					</div>				
 				</div>				
 			</div>

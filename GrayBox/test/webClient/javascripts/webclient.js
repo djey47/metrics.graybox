@@ -1,11 +1,15 @@
 $(function () {
 	// Refresh every (ms)
-	var DELAY = 5000;
+	var DELAY = 1;
 	
 	var refreshId = 0;
 	
 	var successHandler = function (response) {
 		$("#value").val(response.value);
+		var tms = new Date().getTime() / 1000;
+		$("#time").val(tms);
+		var valueExport = $("#valueExport").text();
+		$("#valueExport").text(valueExport + response.value + ";" + tms + ";\n");
 	};
 	
 	var errorHandler = function (jqxhr, status, errorThrown) {
@@ -32,17 +36,20 @@ $(function () {
 	
 	var startCheck = function() {
 		if (refreshId == 0) {
+			$("#checkLbl").show();
         	refreshId = setInterval(checkValue, DELAY);
         }
 	};
 	
 	var stopCheck = function() {
-		clearInterval(refreshId);	
-		refreshId = 0;	
+		if (refreshId != 0) {
+			clearInterval(refreshId);	
+			refreshId = 0;	
+			$("#checkLbl").hide();
+		}
 	};
-	
-	
-	
+			
+ 	$("#checkOneBtn").on("click", checkValue);
  	$("#checkBtn").on("click", startCheck);
  	$("#stopBtn").on("click", stopCheck); 	
 });
