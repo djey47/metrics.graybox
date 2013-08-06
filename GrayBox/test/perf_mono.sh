@@ -1,4 +1,5 @@
 #! /bin/bash
+#MSYSGIT (Windows) can't run this script!
 #Mono retrieve feature -> performance test
 #Computes delays between post and get requests and total execution time 
 

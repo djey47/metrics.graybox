@@ -1,4 +1,5 @@
 #! /bin/bash
+#MSYSGIT (Windows) can't run this script!
 #Test basic store feature (loop over 1k items)
 echo Will publish @APP_TEST/STORE/LOOP !
 
