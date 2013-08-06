@@ -1,8 +1,8 @@
 $(function () {
 	// Refresh every (ms)
-	var DELAY = 10;
+	var DELAY = 5000;
 	
-	var refreshId;
+	var refreshId = 0;
 	
 	var successHandler = function (response) {
 		$("#value").val(response.value);
@@ -10,6 +10,7 @@ $(function () {
 	
 	var errorHandler = function (jqxhr, status, errorThrown) {
 		console.log(status + " - " + errorThrown);
+		$("#value").val("## NO VALUE ##");		
 	};
 
 	var checkValue = function() {
@@ -30,11 +31,14 @@ $(function () {
 	}
 	
 	var startCheck = function() {
-        refreshId = setInterval(checkValue, DELAY);
+		if (refreshId == 0) {
+        	refreshId = setInterval(checkValue, DELAY);
+        }
 	};
 	
 	var stopCheck = function() {
-		clearInterval(refreshId);		
+		clearInterval(refreshId);	
+		refreshId = 0;	
 	};
 	
 	
