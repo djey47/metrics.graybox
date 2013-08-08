@@ -1,10 +1,12 @@
 $(function () {
-	// Refresh every (ms)
 	var refreshId = 0;
-	
+	var appId;
+	var ctxId;
+	var natId;		
+		
 	var successHandler = function (response) {
-		$("#value").val(response.value);
 		var tms = new Date().getTime() / 1000;
+		$("#value").val(response.value);
 		$("#time").val(tms);
 		var valueExport = $("#valueExport").text();
 		$("#valueExport").text(valueExport + response.value + ";" + tms + ";\n");
@@ -13,17 +15,14 @@ $(function () {
 	var errorHandler = function (jqxhr, status, errorThrown) {
 		console.log(status + " - " + errorThrown);
 		$("#value").val("## NO VALUE ##");		
+		$("#time").val(tms);
+		var valueExport = $("#valueExport").text();
+		$("#valueExport").text(valueExport + "## NO VALUE ##;" + tms + ";\n");
 	};
 
-	var checkValue = function() {
-		
-		var appId = $("#appId").val();
-		var ctxId = $("#ctxId").val();
-		var natId = $("#natId").val();		
-		var url = "http://localhost:4568/server/" + appId + "/" + ctxId + "/" + natId;
-				
+	var checkValue = function() {		
 		$.ajax({
-			url: url,
+			url: "http://localhost:4568/server/" + appId + "/" + ctxId + "/" + natId,
 			type: "GET",
             dataType: "jsonp",
             jsonp: 'jsonp_callback', 			
@@ -34,8 +33,11 @@ $(function () {
 	
 	var startCheck = function() {
 		if (refreshId == 0) {
-			$("#checkLbl").show();
+			appId = $("#appId").val();
+			ctxId = $("#ctxId").val();
+			natId = $("#natId").val();				
         	refreshId = setInterval(checkValue, $("#rateSel").val());
+			$("#checkLbl").show();
         }
 	};
 	
