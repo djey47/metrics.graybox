@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
 
         <link href="./stylesheets/bootstrap.min.css" rel="stylesheet">
+        <link href="./stylesheets/webclient.css" rel="stylesheet">
 
         <script src="./javascripts/lib/jquery-1.10.0.min.js"></script>
         <script src="./javascripts/lib/bootstrap.min.js"></script>
@@ -22,7 +23,7 @@
         </div>
 
     <!-- MAIN -->
-        <div class="container" style="padding-top:45px;">
+        <div id="mainContainer" class="container">
         	<div class="form-horizontal">
         		
 				<div class="control-group">
@@ -88,7 +89,7 @@
 				<div class="control-group">				
                 	<label class="control-label">Values (CSV)</label>
                 	<div class="controls">
-	                	<textarea id="valueExport" cols="45" style="width:450px;height:300px;"></textarea>
+	                	<textarea id="valueExport" cols="45"></textarea>
 	                	<br />
 					  	<button class="btn" id="clearBtn">Clear</button>	                	
 					</div>				
@@ -98,9 +99,7 @@
 
     <!-- FOOTER -->
         <div class="navbar navbar-fixed-bottom">
-            <div class="navbar-inner">
-
-            </div>
+            <div class="navbar-inner"></div>
         </div>
     </body>
 </html>
