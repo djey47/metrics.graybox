@@ -57,11 +57,19 @@
 				<div class="control-group">
                 	<label class="control-label">Real time value check</label>
                 	<div class="controls">
-					<div class="btn-group">
-					  <button class="btn" id="checkBtn">Check</button>
-					  <button class="btn" id="stopBtn">Stop</button>
-					</div>
-                	<span id="checkLbl" class="label label-info hide">Checking...</span>
+						@
+						<select id="rateSel">
+							<option value="1000">1</option>
+							<option value="33">30</option>
+							<option value="17">60</option>
+							<option value="1">1k</option>
+						</select>
+						Hz
+						<div class="btn-group">
+						  <button class="btn" id="checkBtn">Check</button>
+						  <button class="btn" id="stopBtn">Stop</button>
+						</div>
+						<span id="checkLbl" class="label label-info hide">Checking...</span>
 					</div>    		
 				</div>
 				<div class="control-group">				
@@ -76,6 +84,8 @@
                 	<label class="control-label">Values (CSV)</label>
                 	<div class="controls">
 	                	<textarea id="valueExport" cols="45" style="width:350px;height:300px;"></textarea>
+	                	<br />
+					  	<button class="btn" id="clearBtn">Clear</button>	                	
 					</div>				
 				</div>				
 			</div>

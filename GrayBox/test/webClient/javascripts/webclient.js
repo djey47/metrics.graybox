@@ -1,7 +1,5 @@
 $(function () {
 	// Refresh every (ms)
-	var DELAY = 1;
-	
 	var refreshId = 0;
 	
 	var successHandler = function (response) {
@@ -37,7 +35,7 @@ $(function () {
 	var startCheck = function() {
 		if (refreshId == 0) {
 			$("#checkLbl").show();
-        	refreshId = setInterval(checkValue, DELAY);
+        	refreshId = setInterval(checkValue, $("#rateSel").val());
         }
 	};
 	
@@ -48,8 +46,15 @@ $(function () {
 			$("#checkLbl").hide();
 		}
 	};
+	
+	var clearValues = function() {
+		$("#value").val("");
+		$("#time").val("");
+		$("#valueExport").text("");	
+	}
 			
  	$("#checkOneBtn").on("click", checkValue);
  	$("#checkBtn").on("click", startCheck);
  	$("#stopBtn").on("click", stopCheck); 	
+ 	$("#clearBtn").on("click", clearValues); 	
 });
